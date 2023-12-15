@@ -37,11 +37,9 @@ var init = function (window) {
         ////////////////////////////////////////////////////////////
         ///////////////// PROGRAM LOGIC ////////////////////////////
         ////////////////////////////////////////////////////////////
-        drawCircle();
-        drawCircle();
-        drawCircle();
-        drawCircle();
-        drawCircle();
+        for (let i = 0; i < 100; i++) {
+            drawCircle();
+        }
         /* 
         This Function is called 60 times/second producing 60 frames/second.
         In each frame, for every circle, it should redraw that circle
@@ -49,22 +47,22 @@ var init = function (window) {
         */
         function update() {
             // TODO 4 : Update the circle's position //
-            physikz.updatePosition(circles[0]);
-            physikz.updatePosition(circles[1]);
-            physikz.updatePosition(circles[2]);
-            physikz.updatePosition(circles[3]);
-            physikz.updatePosition(circles[4]);
+            
             
             // TODO 5 / 10 : Call game.checkCirclePosition() on your circles.
-            game.checkCirclePosition(circles[0]);
-            game.checkCirclePosition(circles[1]);
-            game.checkCirclePosition(circles[2]);
-            game.checkCirclePosition(circles[3]);
-            game.checkCirclePosition(circles[4]);
-
-            // TODO 9 : Iterate over the array
            
             
+
+            // TODO 9 : Iterate over the array
+
+           // Loop through each circle in the circles array
+    for (let i = 0; i < circles.length; i++) {
+        // Update the position of each circle
+        physikz.updatePosition(circles[i]);
+        
+        // Check the position of each circle
+        game.checkCirclePosition(circles[i]);
+    }
         }
     
         /* 
@@ -80,7 +78,22 @@ var init = function (window) {
             }
             
             // TODO 6 : YOUR CODE STARTS HERE //////////////////////
-            
+            for (let i = 0; i < circles.length; i++) {
+                game.checkCirclePosition(circles[i]);
+        
+                if (circles[i].y - circles[i].radius > canvas.height) {
+                    circles[i].y = -circles[i].radius;
+                }
+                if (circles[i].y + circles[i].radius < 0) {
+                    circles[i].y = canvas.height + circles[i].radius;
+                }
+                if (circles[i].x - circles[i].radius > canvas.width) {
+                    circles[i].x = -circles[i].radius;
+                }
+                if (circles[i].x + circles[i].radius < 0) {
+                    circles[i].x = canvas.width + circles[i].radius;
+                }
+            }
 
 
             // YOUR TODO 6 CODE ENDS HERE //////////////////////////
@@ -99,7 +112,7 @@ var init = function (window) {
         game.update = update;
         
         app.addUpdateable(window.opspark.game);
-    }
+        
 };
 
 // DON'T REMOVE THIS CODE //////////////////////////////////////////////////////
@@ -107,4 +120,5 @@ if((typeof process !== 'undefined') &&
     (typeof process.versions.node !== 'undefined')) {
     // here, export any references you need for tests //
     module.exports = init;
-}
+    };
+};
